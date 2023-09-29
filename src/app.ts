@@ -3,8 +3,12 @@ import morgan from "morgan";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
+import authRoutes from "./routes/auth.routes";
+import rolesRoutes from "./routes/roles.routes";
+import userRoutes from "./routes/user.routes";
 
 dotenv.config();
+
 export class App {
   private app: Application;
 
@@ -27,9 +31,9 @@ export class App {
   }
 
   routes() {
-    this.app.get("/", (_req, res) => {
-      res.send("Hello World");
-    });
+    this.app.use("/api/auth", authRoutes);
+    this.app.use("/api/roles", rolesRoutes);
+    this.app.use("/api/users", userRoutes);
   }
 
   async listen() {
