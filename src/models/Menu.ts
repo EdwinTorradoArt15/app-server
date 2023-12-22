@@ -2,17 +2,18 @@ import { Model, DataTypes } from "sequelize";
 import sequelize from "../config/database";
 import { Permission } from "./Permission";
 
-class Role extends Model {
-  public id_role!: number;
+class Menu extends Model {
+  public id_menu!: number;
   public name!: string;
+  public icon!: string;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
 
-Role.init(
+Menu.init(
   {
-    id_role: {
+    id_menu: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
@@ -22,17 +23,20 @@ Role.init(
       allowNull: false,
       unique: true,
     },
+    icon: {
+      type: new DataTypes.STRING(128),
+      allowNull: false,
+    },
   },
   {
     sequelize,
-    tableName: "roles",
+    tableName: "menus",
   }
 );
 
-Role.belongsTo(Permission, {
-  foreignKey: "id_role",
+Menu.belongsTo(Permission, {
+  foreignKey: "id_permission",
   as: "permission",
 });
 
-
-export { Role };
+export { Menu };

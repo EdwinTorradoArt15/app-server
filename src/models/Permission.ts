@@ -1,18 +1,19 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "../config/database";
-import { Permission } from "./Permission";
 
-class Role extends Model {
-  public id_role!: number;
+class Permission extends Model {
+  public id_permission!: number;
   public name!: string;
+  public status!: boolean;
+  public url!: string;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
 
-Role.init(
+Permission.init(
   {
-    id_role: {
+    id_permission: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
@@ -22,17 +23,20 @@ Role.init(
       allowNull: false,
       unique: true,
     },
+    status: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
+    url: {
+      type: new DataTypes.STRING(128),
+      allowNull: false,
+      unique: true,
+    },
   },
   {
     sequelize,
-    tableName: "roles",
+    tableName: "permissions",
   }
 );
 
-Role.belongsTo(Permission, {
-  foreignKey: "id_role",
-  as: "permission",
-});
-
-
-export { Role };
+export { Permission };
